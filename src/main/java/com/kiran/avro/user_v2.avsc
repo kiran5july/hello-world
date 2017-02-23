@@ -1,0 +1,9 @@
+{"namespace": "com.kiran.avro",
+ "type": "record",
+ "name": "UserNew",
+ "fields": [
+     {"name": "name", "type": "string"},
+     {"name": "favorite_number",  "type": ["int", "null"]},
+     {"name": "favorite_color", "type": ["string", "null"]}
+ ]
+}

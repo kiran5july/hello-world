@@ -1,0 +1,12 @@
+{"namespace": "com.kiran.avro",
+ "type": "record",
+ "name": "User",
+ "fields": [
+ 	{"name": "id", "type": "int"},
+     {"name": "name", "type": "string"},
+     {"name": "profession", "type": ["string", "null"]},
+     {"name": "email", "type": ["string", "null"]},
+     {"name": "login", "type": ["string", "null"]},
+     {"name": "loc", "type": ["string", "null"], "default":"null"}
+ ]
+}
