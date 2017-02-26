@@ -1,0 +1,65 @@
+package com.kiran;
+import java.sql.*;
+
+public class DBConnExecAnySQL {
+
+
+  public static void main(String args[]) {
+   Connection conn=null;
+   Statement stmt=null;
+   ResultSet rs=null;
+
+   if (args.length==0){
+     System.out.println("Usage: java ShowAnyData SQLSelectStatement");
+     System.out.println("For example: java ShowAnyData \"Select * from Employee\"");
+     System.exit(1);
+   }
+
+   try {
+	// Class.forName("org.apache.derby.jdbc.ClientDriver");
+     //conn = DriverManager.getConnection( "jdbc:derby://localhost:1527/Lesson22"); 
+	   Class.forName("com.mysql.jdbc.Driver");
+	    conn = DriverManager.getConnection( "jdbc:mysql://localhost:3306/retail_db","km","Kiran$5july@123");
+	    
+    // Create a Statement object
+    stmt = conn.createStatement(); 
+
+    // Execute SQL Select 
+    rs = stmt.executeQuery(args[0]);  
+
+    // Find out the number of columns, their names and display the data
+    ResultSetMetaData rsMeta = rs.getMetaData();
+    int colCount = rsMeta.getColumnCount();
+
+     for (int i = 1; i <= colCount; i++)  {
+      System.out.print(rsMeta.getColumnName(i) + " "); 
+    }
+    System.out.println();
+   
+    while (rs.next()){
+    	System.out.print("[");
+       for (int i = 1; i <= colCount; i++)  {
+         System.out.print(rs.getString(i) + " "); 
+       }
+       System.out.print("]\n");   // new line character
+    }
+
+   } catch( SQLException se ) {
+      System.out.println ("SQLError: " + se.getMessage ()
+           + " code: " + se.getErrorCode ());
+
+   } catch( Exception e ) {
+      System.out.println(e.getMessage()); 
+      e.printStackTrace(); 
+   } finally{
+       // clean up the system resources
+       try{
+	   rs.close();     
+	   stmt.close(); 
+	   conn.close();  
+       } catch(Exception e){
+           e.printStackTrace();
+       } 
+   }
+ }
+}
